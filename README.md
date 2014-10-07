@@ -37,19 +37,19 @@ II. Chat system implementation
 =============================
 Before talking about the correctness of the chat system, I will show how I built it in UML:
 
-![alt text](https://github.com/arthurHamon2/Distributed-Chat/images/UML.png "UML")
+![alt text](https://github.com/arthurHamon2/Distributed-Chat/blob/master/images/UML.png "UML")
 
 
 The chat server has as many chat message pullers as channels. A chatMessagePuller object runs in a thread. Its role is to read the data from the chat server tuple space from its channel and distribute the data to all listeners of the channel (of its node). Each chat listeners have their own tuple space and they read data from there when the chat message puller writes in it. It avoids a lot a thread waiting on patterns in the same tuple space. Whatever the number of listeners, there will always be the same number of objects waiting in the tuple space. This is a picture to summarize the configuration of a node:
 
-![alt text](https://github.com/arthurHamon2/Distributed-Chat/images/General.png "Summary")
+![alt text](https://github.com/arthurHamon2/Distributed-Chat/blob/master/images/General.png "Summary")
 
 1. Bounded buffer
 -----------------
 
 I took the bounded buffer algorithm we studied in the exercise session 4 and 5. I did some modifications to the algorithm as the same data needs to be read by all the listeners. For the write operation, if there are no listeners on a given channel, the writer can consider that the data has been read and it releases a "not full" tuple to not block the buffer. The read operation releases a tuple "not full" only when the data has been distributed to all listeners. To ensure synchronization between different nodes, I used the tuples described on the picture below:
 
- ![alt text](https://github.com/arthurHamon2/Distributed-Chat/images/Tuples.png "Tuples used")
+ ![alt text](https://github.com/arthurHamon2/Distributed-Chat/blob/master/images/Tuples.png "Tuples used")
 
 2. Message consistency across listeners
 ---------------------------------------
