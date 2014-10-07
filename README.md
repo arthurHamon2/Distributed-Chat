@@ -1,25 +1,38 @@
 Distributed-Chat
 ================
 
+![alt text](https://github.com/arthurHamon2/Distributed-Chat/blob/master/images/Screenshot.png "Screenshot")
+
 This project has been made in Java. It comes with a TupleSpace server that you need to start first. This server allows you to start a chat room by connecting to it. As said in the title, it's a distributed chat, you can connect to the server from different machines. Once a chat room is created, you can send messages to a channel that will be spread accross all listeners to this channel. If there are some listeners joining during a conversation, they will get the last messages (the number of back-up messages is defined by the buffer size given when a chat room is started).
 
 How to launch the project
 -------------------------
-**The easy way, this will start a server and create a chat client with a buffer size of ten and three channels**
+**The easy way** 
+
+*this will start a server and create a chat client with a buffer size of ten and three channels*
 
 javac chatui/MetaUI.java 
-java chatui/MetaUI
+
+java chatui.MetaUI
 
 **The manual way**
 
 *Start the tuple server, which returns the port you must listen to:*
+
 javac tupleserver/TupleServer.java
-java tupleserver/TupleServer&
+
+java tupleserver.TupleServer&
+
 *Start a chat room*
+
 javac chatui/ChatUI.java
-java chatui/ChatUI {ip_address}:{port_returned} 5 channel_test & # Creating a chat room with a buffer size of 5 and one channel.
+
+java chatui.ChatUI {ip_address}:{port_returned} 5 channel_test & # Creating a chat room with a buffer size of 5 and one channel.
+
 *Start a new client which will use the same settings first created chat room*
-java chatui/ChatUI {ip_address}:{port_returned} &
+
+java chatui.ChatUI {ip_address}:{port_returned} &
+
 
 You can find more detailed on the implementation below: 
 
